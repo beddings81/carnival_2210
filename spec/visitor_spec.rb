@@ -16,8 +16,12 @@ RSpec.describe Visitor do
   it 'can add preferences' do
     visitor1.add_preference(:gentle)
     visitor1.add_preference(:water)
+    visitor2.add_preference(:fast)
+    visitor3.add_preference(:high)
 
     expect(visitor1.preferences).to eq([:gentle, :water])
+    expect(visitor2.preferences).to eq([:fast])
+    expect(visitor3.preferences).to eq([:high])
   end
 
   it 'can check if they are tall enough for rides' do

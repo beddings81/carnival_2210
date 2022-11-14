@@ -3,8 +3,9 @@ class Ride
               :min_height,
               :admission_fee,
               :excitement,
-              :total_revenue,
               :rider_log
+
+  attr_accessor :total_revenue, :ride_count           
 
   def initialize(attributes)
     @name = attributes[:name]
@@ -13,23 +14,21 @@ class Ride
     @excitement = attributes[:excitement]
     @total_revenue = 0
     @rider_log = {}
+    @ride_count = 0
   end
   
   def board_rider(visitor)
-    # require 'pry'; binding.pry
-    if visitor.preferences.include?(@excitement) && visitor.height >= @min_height 
-      if @rider_log[visitor].nil?
-        rider_log[visitor] = 1
-        visitor.spending_money - @admission_fee
-        @total_revenue += @admission_fee
-      else
-        rider_log[visitor] += 1
-        visitor.spending_money - @admission_fee
-        @total_revenue += @admission_fee
-      end
-      # require 'pry'; binding.pry
+    return unless visitor.preferences.include?(@excitement) && visitor.height >= @min_height 
+    if @rider_log[visitor].nil?
+      rider_log[visitor] = 1
+      visitor.spending_money -= @admission_fee
+      @total_revenue += @admission_fee
+      @ride_count += 1
+    else
+      rider_log[visitor] += 1
+      visitor.spending_money -= @admission_fee
+      @total_revenue += @admission_fee
+      @ride_count += 1
     end
   end
-
-
 end
